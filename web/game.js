@@ -105,7 +105,7 @@ export function onAnswer(answer) {
 export function update() {
     let i = Math.floor(Math.random()*(tweetData.length - 1)) + 1;
     currentIndex = i;
-    console.log(currentIndex);
+    //console.log(currentIndex);
     currentRow = tweetData[i];
     document.getElementById('tweet').textContent = currentRow;
 
@@ -117,6 +117,7 @@ export function update() {
         button.classList.remove('chosen_party_incorrect');
     }
     document.getElementById("next").style.display = "none";
+    document.getElementById('tweet').scrollIntoView();
 }
 
 window.onload = async function() {

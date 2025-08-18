@@ -53,8 +53,8 @@ function sfc32(a, b, c, d) {
 // Build the string that is to be copied
 function buildOutputString() {
     let stringBuilder = ["Daily British Voter Quiz - " + window.localStorage.British_voter_quiz_datetime];
-    stringBuilder.push(dailyString.join("") + " " + dailyWins + "/" + dailyLosses);
-    stringBuilder.push("https://red-autumn.itch.io/britishvoter");
+    stringBuilder.push(dailyString.join("") + " " + dailyWins + "/5");
+    stringBuilder.push("https://red-autumn.itch.io/british-voter-quiz");
     return stringBuilder.join("\n");
 }
 
@@ -71,7 +71,7 @@ export function updateDailyMode() {
     let seeds = cyrb128(datetime);
     let prng = sfc32(seeds[0], seeds[1], seeds[2], seeds[3]);
     let idx = 0;
-    if (dailyIndex == 5) {
+    if (dailyIndex >= 5) {
         // TODO: do something when the answers run out
         let outputString = buildOutputString();
         document.getElementById('tweet').textContent = outputString;
@@ -80,12 +80,18 @@ export function updateDailyMode() {
         document.getElementById("next").style.display = "none";
         document.getElementById("question").style.display = "none";
         document.getElementById("buttons").style.display = "none";
+        document.getElementById("copy_post").style.display = "block";
+        document.getElementById("copy_post_button").onclick = () => {
+            document.getElementById("copy_post_button").textContent = "✓ Copied!";
+            navigator.clipboard.writeText(outputString);
+        };
         var old_tweets = [];
         for (idx = 0; idx < dailyIndex; idx++) {
             var i = Math.floor(prng()*(tweetData.length - 1)) + 1;
             old_tweets.push(tweetData[i] + "\n\n" + voteData[i]);
         }
-        document.getElementById('old_tweets').textContent = old_tweets.join("\n\n\n");
+        document.getElementById('old_tweet').textContent = old_tweets.join("\n\n---\n\n");
+        document.getElementById('date').scrollIntoView();
     } else {
         // use the date component of the date.
         for (idx = 0; idx < dailyIndex; idx++) {
@@ -93,7 +99,6 @@ export function updateDailyMode() {
         }
         let i = Math.floor(prng()*(tweetData.length - 1)) + 1;
         currentIndex = i;
-        console.log(currentIndex);
         currentRow = tweetData[i];
         document.getElementById('tweet').textContent = currentRow;
 
@@ -105,6 +110,7 @@ export function updateDailyMode() {
             button.classList.remove('chosen_party_incorrect');
         }
         document.getElementById("next").style.display = "none";
+        document.getElementById('tweet').scrollIntoView();
     }
 }
 
@@ -138,6 +144,11 @@ export function onAnswer(answer) {
     document.getElementById("next").scrollIntoView();
     // update localStorage + daily indices
     dailyIndex += 1;
+    window.localStorage.British_voter_quiz_dailyIndex = dailyIndex;
+    window.localStorage.British_voter_quiz_dailyString = JSON.stringify(dailyString);
+    window.localStorage.British_voter_quiz_dailyWins = dailyWins;
+    window.localStorage.British_voter_quiz_dailyLosses = dailyLosses;
+    window.localStorage.British_voter_quiz_dailyAnswers = JSON.stringify(dailyAnswers);
 }
 
 
@@ -160,7 +171,7 @@ function initialUpdate() {
         dailyIndex = Number.parseInt(window.localStorage.British_voter_quiz_dailyIndex);
     }
     if (window.localStorage.British_voter_quiz_dailyString) {
-        dailyString = window.localStorage.British_voter_quiz_dailyString;
+        dailyString = JSON.parse(window.localStorage.British_voter_quiz_dailyString);
     }
     if (window.localStorage.British_voter_quiz_dailyWins) {
         dailyWins = Number.parseInt(window.localStorage.British_voter_quiz_dailyWins);
