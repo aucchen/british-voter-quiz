@@ -1,0 +1,40 @@
+body {
+    background-color: #fafafa;
+    font-size: 1.05em;
+    line-height: 155%;
+    overflow-y: scroll;
+}
+#play_area {
+    max-width: 550px;
+    margin: 1em auto;
+}
+button {
+    font-size: 0.85em;
+}
+.party {
+    padding: 0.4em;
+    margin: 5px 5px;
+    background-color: #fafafa;
+    border: 1px solid #222;
+    border-radius: 5px;
+}
+.party:hover {
+    background-color: #dadada;
+}
+.chosen_party_correct {
+    background-color: #aaffaa
+}
+.chosen_party_incorrect {
+    background-color: #ffaaaa
+}
+#next_button {
+    padding: 0.4em;
+    margin: 5px 5px;
+    background-color: #0000ff;
+    border: 1px solid #222;
+    border-radius: 5px;
+    color: #fff;
+}
+#next_button:hover {
+    background-color: #aaaaff;
+}

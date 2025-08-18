@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>British Voter Quiz 2024</title>
+    <script type='module' src="game.js"></script>
+    <link rel="stylesheet" type="text/css" href="game.css">
+</head>
+<body>
+    <div id="play_area">
+        <div id="tweet" style="white-space: pre-wrap;"> </div>
+        <br>
+        <div>Which party did I vote for in 2024?</div>
+
+        <div id="correct_vote"></div>
+
+        <div id="response"></div>
+
+        <div id="buttons">
+        <button id="1" class="party">Conservative Party 🟦</button>
+        <button id="2" class="party">Labour Party 🟥</button>
+        <button id="3" class="party">Liberal Democrat 🟧</button>
+        <button id="7" class="party">Green 🟩</button>
+        <button id="12" class="party">Reform UK 🟦</button>
+        <button id="4" class="party">Scottish National Party (SNP) 🟨</button>
+        <button id="5" class="party">Plaid Cymru 🟩</button>
+        <!--<button id="8" class="party"></button>-->
+        <button id="13" class="party">Independent ⬜</button>
+        <button id="9" class="party">Other ⬜</button>
+        </div>
+
+        <div id="next" style="display:none;">
+            <button id="next_button">Next</button>
+        </div>
+
+
+        <div id="current_score"></div>
+
+    </div>
+</body>
