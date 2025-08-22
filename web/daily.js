@@ -14,7 +14,8 @@ let dailyLosses = 0;
 let dailyAnswers = [];
 
 
-let historyRecord = [];
+// TODO: record past results
+let historyRecord = {};
 
 // source for prngs and hash functions: https://stackoverflow.com/a/47593316
 function cyrb128(str) {
@@ -73,6 +74,10 @@ export function updateDailyMode() {
     let idx = 0;
     if (dailyIndex >= 5) {
         // TODO: do something when the answers run out
+        if (!historyRecord[datetime]) {
+            historyRecord[datetime] = dailyWins;
+            window.localStorage.British_voter_quiz_historyRecord = JSON.stringify(historyRecord);
+        }
         let outputString = buildOutputString();
         document.getElementById('tweet').textContent = outputString;
         document.getElementById('correct_vote').textContent = '';
@@ -183,7 +188,7 @@ function initialUpdate() {
         dailyAnswers = JSON.parse(window.localStorage.British_voter_quiz_dailyAnswers);
     }
     if (window.localStorage.British_voter_quiz_historyRecord) {
-        dailyAnswers = JSON.parse(window.localStorage.British_voter_quiz_historyRecord);
+        historyRecord = JSON.parse(window.localStorage.British_voter_quiz_historyRecord);
     }
     document.getElementById('current_score').textContent = dailyString.join('');
 }
